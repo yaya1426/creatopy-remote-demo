@@ -1,0 +1,5 @@
+export const NOT_FOUND = 'NOT_FOUND';
+export const FAILED_TO_RETRIVE = 'FAILED_TO_RETRIVE';
+export const FAILED_TO_CREATE = 'FAILED_TO_CREATE';
+export const FAILED_TO_UPDATE = 'FAILED_TO_UPDATE';
+export const FAILED_TO_DELETE = 'FAILED_TO_DELETE';

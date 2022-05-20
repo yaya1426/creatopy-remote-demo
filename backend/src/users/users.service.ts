@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { AuthService } from 'auth/auth.service';
-import { LoginInput } from './graphql/users.inputs';
+import { LoginInput } from '../graphql/users/users.inputs';
 
 @Injectable()
 export class UsersService {

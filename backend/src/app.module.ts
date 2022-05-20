@@ -13,7 +13,9 @@ import { AuthModule } from './auth/auth.module';
     // ## SEQUELIZE SETUP
     SequelizeModule.forRoot({
       dialect: 'sqlite',
-      storage: 'db/demo.db',
+      storage: 'db/data.db',
+      autoLoadModels: true,
+      synchronize: true,
     }),
     // ## GRAPHQL SETUP
     GraphQLModule.forRoot<ApolloDriverConfig>({

@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { ApolloError } from 'apollo-server-express';
-import { LoginInput } from './graphql/users.inputs';
-import { LoginResult } from './graphql/users.types';
+import { LoginResult } from 'graphql/users/users.types';
+import { LoginInput } from '../graphql/users/users.inputs';
 import { UsersService } from './users.service';
 
 @Resolver()
