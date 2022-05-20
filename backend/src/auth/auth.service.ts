@@ -4,6 +4,7 @@ import { JwtPayload } from './constants/jwt-payload.interface';
 import { ConfigService } from 'config/config.service';
 import { UsersService } from 'modules/users/users.service';
 import { UserType } from 'graphql/users/users.types';
+import { UserModel } from 'models/user.model';
 
 @Injectable()
 export class AuthService {

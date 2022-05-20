@@ -19,7 +19,4 @@ export class SignupInput {
 
   @Field()
   password: string;
-
-  @Field()
-  repeatPassword: string;
 }

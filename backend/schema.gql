@@ -5,8 +5,9 @@
 type Item {
   id: Float!
   title: String!
-  createdAt: DateTime!
-  user: User!
+  createdAt: DateTime
+  userId: Float
+  user: User
 }
 
 """
@@ -32,9 +33,21 @@ type Query {
 
 type Mutation {
   login(data: LoginInput!): LoginResult!
+  signup(data: SignupInput!): User!
+  createItem(data: CreateItemInput!): Item!
 }
 
 input LoginInput {
   username: String!
   password: String!
+}
+
+input SignupInput {
+  name: String!
+  username: String!
+  password: String!
+}
+
+input CreateItemInput {
+  title: String!
 }
