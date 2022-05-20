@@ -18,7 +18,9 @@ Built using create-react-app boilerplate with (redux-typescript) template by run
 #### Backend
 Built using Nest.js boilerplate by running
 `nest new backend`
----
+
+***
+
 ### Running the app
 
 #### Backend
