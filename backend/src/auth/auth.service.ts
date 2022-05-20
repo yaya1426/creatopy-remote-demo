@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './constants/jwt-payload.interface';
 import { ConfigService } from 'config/config.service';
-import { UsersService } from 'users/users.service';
+import { UsersService } from 'modules/users/users.service';
 import { UserType } from 'graphql/users/users.types';
 
 @Injectable()
