@@ -1,0 +1,40 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Item {
+  id: String!
+  title: String!
+  created_at: DateTime!
+  user: User!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  id: String!
+  username: String!
+  name: String!
+  items: Item
+}
+
+type LoginResult {
+  user: User!
+  jwt: String!
+}
+
+type Query {
+  items: [Item!]!
+}
+
+type Mutation {
+  login(data: LoginInput!): LoginResult!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
+}

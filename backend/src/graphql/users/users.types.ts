@@ -1,6 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { ItemType } from 'graphql/items/items.types';
-import { Item } from 'interfaces/item.interface';
 import { User } from 'interfaces/user.interface';
 
 @ObjectType('User')
@@ -21,7 +20,7 @@ export class UserType implements User {
 @ObjectType()
 export class LoginResult {
   @Field()
-  user: User;
+  user: UserType;
 
   @Field()
   jwt: string;
