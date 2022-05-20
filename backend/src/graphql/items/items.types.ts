@@ -5,14 +5,17 @@ import { Item } from 'interfaces/item.interface';
 @ObjectType('Item')
 export class ItemType implements Item {
   @Field()
-  id: number;
+  id?: number;
 
   @Field()
   title: string;
 
-  @Field()
-  createdAt: Date;
+  @Field({ nullable: true })
+  createdAt?: Date;
 
-  @Field((type) => UserType)
-  user: UserType;
+  @Field({ nullable: true })
+  userId?: number;
+
+  @Field((type) => UserType, { nullable: true })
+  user?: UserType;
 }

@@ -14,12 +14,9 @@ export class AuthService {
     private configService: ConfigService,
   ) {}
 
-  async validateJwtPayload(payload: JwtPayload): Promise<UserType | undefined> {
+  async validateJwtPayload(payload: JwtPayload) {
     // This will be used when the user has already logged in and has a JWT
-    const user: UserType = await this.usersService.findOneByUsername(
-      payload.username,
-    );
-
+    const user = await this.usersService.findOneByUsername(payload.username);
     // Ensure the user exists
     if (user) {
       return user;

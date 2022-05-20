@@ -5,6 +5,7 @@ import { ConfigModule } from 'config/config.module';
 import { ConfigService } from 'config/config.service';
 import { UsersModule } from 'modules/users/users.module';
 import { AuthService } from './auth.service';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { AuthService } from './auth.service';
         const expiresIn = configService.get('JWT_EXPIRES_IN');
         if (expiresIn) {
           options.signOptions = {
-            expiresIn: expiresIn,
+            expiresIn: +expiresIn,
           };
         }
         return options;
@@ -28,7 +29,7 @@ import { AuthService } from './auth.service';
     forwardRef(() => UsersModule),
     ConfigModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

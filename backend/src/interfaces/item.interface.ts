@@ -1,8 +1,9 @@
 import { User } from './user.interface';
 
 export interface Item {
-  id: number;
+  id?: number;
   title: string;
-  createdAt: Date;
-  user: User;
+  createdAt?: Date;
+  userId?: number;
+  user?: User;
 }
