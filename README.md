@@ -10,3 +10,29 @@ Both of the projects were created with Typescript.
 
 The frontend is built using create-react-app boilerplate with (redux-typescript) template by running this command:
 `npx create-react-app my-app --template redux-typescript`
+
+
+### Running the app
+#### Backend
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+#### Frontend
+```bash
+# development
+$ npm start
+
+# build app
+$ npm run build
+
+# run tests
+$ npm test
+```
