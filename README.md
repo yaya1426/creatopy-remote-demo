@@ -40,7 +40,7 @@ $ npm run start:prod
 
 ```bash
 # development
-$ npm start
+$ npm run start
 
 # build app
 $ npm run build
