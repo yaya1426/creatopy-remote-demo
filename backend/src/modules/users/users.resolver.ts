@@ -1,8 +1,18 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { ApolloError } from 'apollo-server-express';
-import { FAILED_TO_CREATE } from 'config/apollo-error-types.constants';
+import { JwtAuthGuard } from 'modules/auth/guards/jwt-auth-guard';
+import {
+  FAILED_TO_CREATE,
+  FAILED_TO_UPDATE,
+} from 'config/apollo-error-types.constants';
 import { LoginResult, UserType } from 'graphql/users/users.types';
-import { LoginInput, SignupInput } from '../../graphql/users/users.inputs';
+import {
+  LoginInput,
+  ResetPasswordInput,
+  SignupInput,
+} from '../../graphql/users/users.inputs';
+import { CurrentUser } from './users.decorator';
 import { UsersService } from './users.service';
 
 @Resolver()
@@ -21,5 +31,22 @@ export class UsersResolver {
     const result = await this.usersService.signup(data);
     if (result) return result;
     throw new ApolloError(FAILED_TO_CREATE);
+  }
+
+  @Mutation((returns) => Boolean)
+  @UseGuards(JwtAuthGuard)
+  async resetPassword(
+    @Args('data') resetPasswordInput: ResetPasswordInput,
+    @CurrentUser() user: UserType,
+  ) {
+    try {
+      const result = await this.usersService.resetPassword(
+        resetPasswordInput,
+        user,
+      );
+      return result;
+    } catch (err) {
+      throw new ApolloError(err.message, FAILED_TO_UPDATE);
+    }
   }
 }

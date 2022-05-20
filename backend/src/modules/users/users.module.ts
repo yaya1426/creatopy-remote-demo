@@ -1,7 +1,7 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersResolver } from './users.resolver';
-import { AuthModule } from 'auth/auth.module';
+import { AuthModule } from 'modules/auth/auth.module';
 import { ConfigModule } from 'config/config.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { UserModel } from 'models/user.model';

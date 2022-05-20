@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { ApolloError } from 'apollo-server-express';
-import { JwtAuthGuard } from 'auth/guards/jwt-auth-guard';
+import { JwtAuthGuard } from 'modules/auth/guards/jwt-auth-guard';
 import {
   FAILED_TO_CREATE,
   FAILED_TO_RETRIVE,

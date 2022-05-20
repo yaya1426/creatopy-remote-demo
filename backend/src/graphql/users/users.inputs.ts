@@ -20,3 +20,9 @@ export class SignupInput {
   @Field()
   password: string;
 }
+
+@InputType()
+export class ResetPasswordInput {
+  @Field()
+  newPassword: string;
+}

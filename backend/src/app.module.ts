@@ -6,7 +6,7 @@ import { ConfigModule } from 'config/config.module';
 import { UsersModule } from 'modules/users/users.module';
 import { ItemsModule } from 'modules/items/items.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { AuthModule } from 'auth/auth.module';
+import { AuthModule } from 'modules/auth/auth.module';
 
 @Module({
   imports: [

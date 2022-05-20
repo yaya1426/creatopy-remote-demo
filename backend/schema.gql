@@ -34,6 +34,7 @@ type Query {
 type Mutation {
   login(data: LoginInput!): LoginResult!
   signup(data: SignupInput!): User!
+  resetPassword(data: ResetPasswordInput!): Boolean!
   createItem(data: CreateItemInput!): Item!
 }
 
@@ -46,6 +47,10 @@ input SignupInput {
   name: String!
   username: String!
   password: String!
+}
+
+input ResetPasswordInput {
+  newPassword: String!
 }
 
 input CreateItemInput {

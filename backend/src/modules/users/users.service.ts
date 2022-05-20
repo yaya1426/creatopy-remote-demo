@@ -1,11 +1,19 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { AuthService } from 'auth/auth.service';
-import { ENTRY_EXISTS } from 'config/apollo-error-types.constants';
+import { AuthService } from 'modules/auth/auth.service';
+import {
+  ENTRY_EXISTS,
+  FAILED_TO_RETRIVE,
+  FAILED_TO_UPDATE,
+} from 'config/apollo-error-types.constants';
 import { LoginResult, UserType } from 'graphql/users/users.types';
 import { User } from 'interfaces/user.interface';
 import { UserModel } from 'models/user.model';
-import { LoginInput, SignupInput } from '../../graphql/users/users.inputs';
+import {
+  LoginInput,
+  ResetPasswordInput,
+  SignupInput,
+} from '../../graphql/users/users.inputs';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -53,15 +61,45 @@ export class UsersService {
     if (findUser) {
       throw new Error(ENTRY_EXISTS);
     }
-    // Encrypt the password
-    // generate salt to hash password
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(signupInput.password, salt);
+    // Hash the password
+    const passwordHash = await this.generatePasswordHash(signupInput.password);
     // Create the user
     const createUser = await this.userModel.create({
       ...signupInput,
       password: passwordHash,
     });
     return createUser;
+  }
+
+  async resetPassword(
+    resetPasswordInput: ResetPasswordInput,
+    user: UserType,
+  ): Promise<boolean> {
+    try {
+      const findUser = await this.findOneByUsername(user.username);
+      if (!findUser) {
+        throw new Error(FAILED_TO_RETRIVE);
+      }
+      // Generate new password hash
+      const passwordHash = await this.generatePasswordHash(
+        resetPasswordInput.newPassword,
+      );
+      const updateUser = await this.userModel.update(
+        { ...findUser, password: passwordHash },
+        { where: { id: findUser.id } },
+      );
+      if (updateUser.length > 0) {
+        return true;
+      }
+      return false;
+    } catch (err) {
+      throw new Error(FAILED_TO_UPDATE);
+    }
+  }
+
+  private async generatePasswordHash(password: string) {
+    // generate salt to hash password
+    const salt = await bcrypt.genSalt();
+    return await bcrypt.hash(password, salt);
   }
 }
