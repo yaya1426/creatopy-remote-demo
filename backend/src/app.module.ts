@@ -5,9 +5,16 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { ConfigModule } from './config/config.module';
 import { UsersModule } from './users/users.module';
 import { ItemsModule } from './items/items.module';
+import { SequelizeModule } from '@nestjs/sequelize';
 
 @Module({
   imports: [
+    // ## SEQUELIZE SETUP
+    SequelizeModule.forRoot({
+      dialect: 'sqlite',
+      storage: 'db/demo.db',
+    }),
+    // ## GRAPHQL SETUP
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
