@@ -5,7 +5,7 @@ import { User } from 'interfaces/user.interface';
 @ObjectType('User')
 export class UserType implements User {
   @Field()
-  id: string;
+  id: number;
 
   @Field()
   username: string;

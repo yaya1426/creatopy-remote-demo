@@ -5,13 +5,13 @@ import { Item } from 'interfaces/item.interface';
 @ObjectType('Item')
 export class ItemType implements Item {
   @Field()
-  id: string;
+  id: number;
 
   @Field()
   title: string;
 
   @Field()
-  created_at: Date;
+  createdAt: Date;
 
   @Field((type) => UserType)
   user: UserType;

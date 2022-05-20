@@ -13,9 +13,6 @@ export class ItemModel extends Model<Item> {
   @Column
   title: string;
 
-  @Column
-  created_at: Date;
-
   @Column({ defaultValue: true })
   password: string;
 
