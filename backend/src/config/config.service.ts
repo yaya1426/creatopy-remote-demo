@@ -15,7 +15,7 @@ export class ConfigService {
     try {
       file = fs.readFileSync(filePath);
     } catch (error) {
-      file = fs.readFileSync('.env.development');
+      file = fs.readFileSync('.development.env');
     }
 
     this.envConfig = dotenv.parse(file);
