@@ -11,14 +11,14 @@ This repo is composed of 2 projects:
 
 Both of the projects were created with Typescript.
 
-> Frontend
+#### Frontend
 Built using create-react-app boilerplate with (redux-typescript) template by running this command:
 `npx create-react-app frontend --template redux-typescript`
 
-> Backend
+#### Backend
 Built using Nest.js boilerplate by running
 `nest new backend`
-
+---
 ### Running the app
 
 #### Backend
