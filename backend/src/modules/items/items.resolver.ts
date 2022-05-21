@@ -2,10 +2,6 @@ import { UseGuards } from '@nestjs/common';
 import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { ApolloError } from 'apollo-server-express';
 import { JwtAuthGuard } from 'modules/auth/guards/jwt-auth-guard';
-import {
-  FAILED_TO_CREATE,
-  FAILED_TO_RETRIVE,
-} from 'config/apollo-error-types.constants';
 import { CreateItemInput } from 'graphql/items/items.inputs';
 import { ItemType } from 'graphql/items/items.types';
 import { UserType } from 'graphql/users/users.types';
@@ -21,7 +17,7 @@ export class ItemsResolver {
     try {
       return await this.itemsService.getAll();
     } catch (err) {
-      throw new ApolloError(err.message, FAILED_TO_RETRIVE);
+      throw new ApolloError(err.message);
     }
   }
 
@@ -34,7 +30,7 @@ export class ItemsResolver {
     try {
       return await this.itemsService.createItem(data, user?.id);
     } catch (err) {
-      throw new ApolloError(err.message, FAILED_TO_CREATE);
+      throw new ApolloError(err.message);
     }
   }
 }

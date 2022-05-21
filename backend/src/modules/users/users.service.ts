@@ -1,11 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { AuthService } from 'modules/auth/auth.service';
-import {
-  ENTRY_EXISTS,
-  FAILED_TO_RETRIVE,
-  FAILED_TO_UPDATE,
-} from 'config/apollo-error-types.constants';
 import { LoginSignupResult, UserType } from 'graphql/users/users.types';
 import { User } from 'interfaces/user.interface';
 import { UserModel } from 'models/user.model';
@@ -55,19 +50,31 @@ export class UsersService {
   }
 
   async signup(signupInput: SignupInput): Promise<LoginSignupResult> {
-    // Check if user already exists
-    const findUser = await this.findOneByUsername(signupInput.username);
-    if (findUser) {
-      throw new Error(ENTRY_EXISTS);
+    try {
+      // Check if user already exists
+      const findUser = await this.findOneByUsername(signupInput.username);
+      if (findUser) {
+        throw new Error(
+          'There is already an account with same username. Try logging in ?',
+        );
+      }
+      // Validate that password, and confirmPassword are matching
+      if (signupInput.password !== signupInput.confirmPassword) {
+        throw new Error('The passwords do not match');
+      }
+      // Hash the password
+      const passwordHash = await this.generatePasswordHash(
+        signupInput.password,
+      );
+      // Create the user
+      const createUser = await this.userModel.create({
+        ...signupInput,
+        password: passwordHash,
+      });
+      return this.generateLoginSignupResult(createUser);
+    } catch (err) {
+      throw new Error(err.message);
     }
-    // Hash the password
-    const passwordHash = await this.generatePasswordHash(signupInput.password);
-    // Create the user
-    const createUser = await this.userModel.create({
-      ...signupInput,
-      password: passwordHash,
-    });
-    return this.generateLoginSignupResult(createUser);
   }
 
   async resetPassword(
@@ -77,7 +84,7 @@ export class UsersService {
     try {
       const findUser = await this.findOneByUsername(user.username);
       if (!findUser) {
-        throw new Error(FAILED_TO_RETRIVE);
+        throw new Error('User does not exist');
       }
       // Generate new password hash
       const passwordHash = await this.generatePasswordHash(
@@ -92,7 +99,7 @@ export class UsersService {
       }
       return false;
     } catch (err) {
-      throw new Error(FAILED_TO_UPDATE);
+      throw new Error(err.message);
     }
   }
 

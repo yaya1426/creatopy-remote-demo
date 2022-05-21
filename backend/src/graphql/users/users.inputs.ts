@@ -19,6 +19,9 @@ export class SignupInput {
 
   @Field()
   password: string;
+
+  @Field()
+  confirmPassword: string;
 }
 
 @InputType()

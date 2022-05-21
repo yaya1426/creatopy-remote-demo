@@ -47,6 +47,7 @@ input SignupInput {
   name: String!
   username: String!
   password: String!
+  confirmPassword: String!
 }
 
 input ResetPasswordInput {

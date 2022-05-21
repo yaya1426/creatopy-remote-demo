@@ -13,11 +13,14 @@ export class ItemsService {
   ) {}
 
   async getAll(): Promise<Item[]> {
-    const items = await this.itemModel.findAll({
-      include: { model: UserModel, as: 'user' },
-    });
-
-    return items;
+    try {
+      const items = await this.itemModel.findAll({
+        include: { model: UserModel, as: 'user' },
+      });
+      return items;
+    } catch (err) {
+      throw new Error(err.message);
+    }
   }
 
   async createItem(
