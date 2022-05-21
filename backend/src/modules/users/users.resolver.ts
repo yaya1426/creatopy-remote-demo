@@ -6,7 +6,7 @@ import {
   FAILED_TO_CREATE,
   FAILED_TO_UPDATE,
 } from 'config/apollo-error-types.constants';
-import { LoginResult, UserType } from 'graphql/users/users.types';
+import { LoginSignupResult, UserType } from 'graphql/users/users.types';
 import {
   LoginInput,
   ResetPasswordInput,
@@ -19,14 +19,14 @@ import { UsersService } from './users.service';
 export class UsersResolver {
   constructor(private usersService: UsersService) {}
 
-  @Mutation((returns) => LoginResult)
+  @Mutation((returns) => LoginSignupResult)
   async login(@Args('data') data: LoginInput) {
     const result = await this.usersService.login(data);
     if (result) return result;
     throw new ApolloError('Invalid username or password');
   }
 
-  @Mutation((returns) => UserType)
+  @Mutation((returns) => LoginSignupResult)
   async signup(@Args('data') data: SignupInput) {
     const result = await this.usersService.signup(data);
     if (result) return result;

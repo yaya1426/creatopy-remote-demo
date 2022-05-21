@@ -6,7 +6,7 @@ import {
   FAILED_TO_RETRIVE,
   FAILED_TO_UPDATE,
 } from 'config/apollo-error-types.constants';
-import { LoginResult, UserType } from 'graphql/users/users.types';
+import { LoginSignupResult, UserType } from 'graphql/users/users.types';
 import { User } from 'interfaces/user.interface';
 import { UserModel } from 'models/user.model';
 import {
@@ -34,7 +34,7 @@ export class UsersService {
     return undefined;
   }
 
-  async login(loginInput: LoginInput): Promise<LoginResult> {
+  async login(loginInput: LoginInput): Promise<LoginSignupResult> {
     try {
       const findUser = await this.findOneByUsername(loginInput.username);
       if (findUser) {
@@ -44,9 +44,8 @@ export class UsersService {
           findUser.password,
         );
         if (isValidPassword) {
-          // Create the jwt token
-          const token = this.authService.createJwt(findUser).token;
-          return { user: findUser, jwt: token };
+          // Create the jwt result
+          return this.generateLoginSignupResult(findUser);
         }
       }
       return undefined;
@@ -55,7 +54,7 @@ export class UsersService {
     }
   }
 
-  async signup(signupInput: SignupInput) {
+  async signup(signupInput: SignupInput): Promise<LoginSignupResult> {
     // Check if user already exists
     const findUser = await this.findOneByUsername(signupInput.username);
     if (findUser) {
@@ -68,7 +67,7 @@ export class UsersService {
       ...signupInput,
       password: passwordHash,
     });
-    return createUser;
+    return this.generateLoginSignupResult(createUser);
   }
 
   async resetPassword(
@@ -101,5 +100,11 @@ export class UsersService {
     // generate salt to hash password
     const salt = await bcrypt.genSalt();
     return await bcrypt.hash(password, salt);
+  }
+
+  private async generateLoginSignupResult(user: User) {
+    // Create the jwt token
+    const token = this.authService.createJwt(user).token;
+    return { user: user, jwt: token };
   }
 }

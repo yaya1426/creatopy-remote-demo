@@ -18,7 +18,7 @@ export class UserType implements User {
 }
 
 @ObjectType()
-export class LoginResult {
+export class LoginSignupResult {
   @Field()
   user: UserType;
 

@@ -22,7 +22,7 @@ type User {
   items: Item
 }
 
-type LoginResult {
+type LoginSignupResult {
   user: User!
   jwt: String!
 }
@@ -32,8 +32,8 @@ type Query {
 }
 
 type Mutation {
-  login(data: LoginInput!): LoginResult!
-  signup(data: SignupInput!): User!
+  login(data: LoginInput!): LoginSignupResult!
+  signup(data: SignupInput!): LoginSignupResult!
   resetPassword(data: ResetPasswordInput!): Boolean!
   createItem(data: CreateItemInput!): Item!
 }
