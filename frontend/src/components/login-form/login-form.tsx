@@ -9,6 +9,8 @@ import { useAppDispatch } from "store/hooks";
 import { login } from "store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "components/error-message/error-message";
+import { Notify } from "notiflix";
+import { regexAlphanumeric, regexErrorMessage } from "utils/regex";
 
 type FormValues = {
   username: string;
@@ -25,7 +27,7 @@ export const LoginForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ mode: "onChange" });
 
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
     try {
@@ -35,15 +37,21 @@ export const LoginForm: React.FC = () => {
       });
       if (data) {
         dispatch(login({ ...data.login }));
+        Notify.success("Logged in successfully. Welcome Back!");
         navigate("/");
       }
       console.log(errors);
     } catch (err: any) {
+      Notify.failure("Login attempt was not successful");
       setErrorMessage(err.message);
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {};
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    Notify.failure(
+      "Make sure to enter all required fields (Allowed input is only Alphanumeric A-Z, a-z, 0-9)"
+    );
+  };
 
   return (
     <Card width="650px" titleCentered title="Welcome To Creatopy Item App">
@@ -56,10 +64,17 @@ export const LoginForm: React.FC = () => {
             className="form-control"
             {...register("username", {
               required: true,
+              pattern: {
+                value: regexAlphanumeric,
+                message: regexErrorMessage,
+              },
             })}
           />
-          {errors.username && (
+          {errors.username && errors.username.type === "required" && (
             <div className="text-danger pt-1">Required Field</div>
+          )}
+          {errors.username && errors.username.type === "pattern" && (
+            <div className="text-danger pt-1">{errors.username.message}</div>
           )}
         </Form.Group>
         <Form.Group>

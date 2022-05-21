@@ -9,6 +9,8 @@ import { useAppDispatch } from "store/hooks";
 import { login } from "store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "components/error-message/error-message";
+import { regexAlphanumeric, regexErrorMessage } from "utils/regex";
+import { Notify } from "notiflix";
 
 type FormValues = {
   username: string;
@@ -42,6 +44,7 @@ export const SignupForm: React.FC = () => {
       });
       if (data) {
         dispatch(login({ ...data.signup }));
+        Notify.success("Account created successfully. Welcome!")
         navigate("/");
       }
     } catch (err: any) {
@@ -62,10 +65,17 @@ export const SignupForm: React.FC = () => {
             className="form-control"
             {...register("name", {
               required: true,
+              pattern: {
+                value: regexAlphanumeric,
+                message: regexErrorMessage,
+              },
             })}
           />
-          {errors.name && (
+          {errors.name && errors.name.type === "required" && (
             <div className="text-danger pt-1">Required Field</div>
+          )}
+          {errors.name && errors.name.type === "pattern" && (
+            <div className="text-danger pt-1">{errors.name.message}</div>
           )}
         </Form.Group>
         <Form.Group className="mb-3">
@@ -76,10 +86,17 @@ export const SignupForm: React.FC = () => {
             className="form-control"
             {...register("username", {
               required: true,
+              pattern: {
+                value: regexAlphanumeric,
+                message: regexErrorMessage,
+              },
             })}
           />
-          {errors.username && (
+          {errors.username && errors.username.type === "required" && (
             <div className="text-danger pt-1">Required Field</div>
+          )}
+          {errors.username && errors.username.type === "pattern" && (
+            <div className="text-danger pt-1">{errors.username.message}</div>
           )}
         </Form.Group>
         <Form.Group className="mb-3">

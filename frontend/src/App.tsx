@@ -7,8 +7,16 @@ import { SignupPage } from "pages/signup";
 import { Navbar } from "components/navbar/navbar";
 import GuardedRoute from "guards/guarded-route";
 import { ResetPasswordPage } from "pages/reset-password";
+import { Notify } from "notiflix";
 
 function App() {
+  // Initialize notification settings
+  Notify.init({
+    position: "center-bottom",
+    width: "400px",
+    fontSize: "15px",
+    clickToClose: true,
+  });
   return (
     <Router>
       <Navbar />

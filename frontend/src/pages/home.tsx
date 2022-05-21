@@ -6,6 +6,7 @@ import { ALL_ITEMS } from "graphql/query/items.query";
 import { useEffect } from "react";
 import { useAppDispatch } from "store/hooks";
 import { setItems } from "store/slices/itemSlice";
+import { Loading } from "notiflix/build/notiflix-loading-aio";
 
 export const HomePage: React.FC = () => {
   const { data, loading } = useQuery(ALL_ITEMS);
@@ -14,8 +15,13 @@ export const HomePage: React.FC = () => {
   useEffect(() => {
     if (data) {
       dispatch(setItems(data.items));
+      Loading.remove();
     }
   }, [data, loading, dispatch]);
+
+  if (loading) {
+    Loading.standard();
+  }
 
   return (
     <PageWrapper>

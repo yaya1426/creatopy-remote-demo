@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { CREATE_ITEM } from "graphql/mutation/add-item.mutation";
+import { Notify } from "notiflix";
 import { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
@@ -10,8 +11,6 @@ interface FormValues {
   title: string;
 }
 export const ItemsForm: React.FC = () => {
-  const [errorMessage, setErrorMessage] = useState("");
-
   const dispatch = useAppDispatch();
   const [createItem] = useMutation(CREATE_ITEM);
   const {
@@ -29,8 +28,9 @@ export const ItemsForm: React.FC = () => {
       });
       // Dispatch to state
       dispatch(addItem(data.createItem));
+      Notify.success("New item added successfully !");
     } catch (err: any) {
-      setErrorMessage(err.message);
+      Notify.failure(err.message);
     }
   };
 
