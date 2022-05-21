@@ -30,7 +30,7 @@ export class AuthService {
     let expiration: Date | undefined;
     if (expiresIn) {
       expiration = new Date();
-      expiration.setTime(expiration.getTime() + expiresIn * 1000);
+      expiration.setHours(expiration.getHours() + expiresIn);
     }
     const data: JwtPayload = {
       username: user.username,

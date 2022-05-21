@@ -28,4 +28,7 @@ export class SignupInput {
 export class ResetPasswordInput {
   @Field()
   newPassword: string;
+
+  @Field()
+  confirmNewPassword: string;
 }

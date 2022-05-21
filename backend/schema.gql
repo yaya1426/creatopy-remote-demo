@@ -52,6 +52,7 @@ input SignupInput {
 
 input ResetPasswordInput {
   newPassword: String!
+  confirmNewPassword: String!
 }
 
 input CreateItemInput {
