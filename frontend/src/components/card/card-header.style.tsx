@@ -17,18 +17,16 @@ export const TitleWrapper = styled.div<TitleWrapperProps>`
   margin-left: ${(props) => (props.isCentered ? "0px" : "25px")};
 `;
 
-export const Separator = styled.div({
-  marginTop: "15px",
-  width: "8%",
-  borderRadius: "12px",
-  height: "3px",
-  backgroundColor: "#B0000D",
-});
+export const Separator = styled.div`
+  margin-top: 15px;
+  width: 8%;
+  border-radius: 12px;
+  height: 3px;
+  background-color: #454545;
+`;
 
 export const Title = styled.h2`
-  font-family: Almarai, sans-serif;
   font-weight: 500;
-  line-height: 42px;
   color: #142029;
   font-size: 34px;
   text-align: center;
@@ -36,11 +34,3 @@ export const Title = styled.h2`
     font-size: "";
   }
 `;
-export const SubTitle = styled.h4({
-  fontSize: "ms",
-  fontWeight: 400,
-  textAlign: "center",
-  "@media (max-width: 991px)": {
-    fontSize: "base",
-  },
-});

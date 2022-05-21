@@ -1,5 +1,5 @@
 import { CardHeader } from "./card-header";
-import { CardBody, CardWrapper } from "./card.style";
+import { CardBody, CardContent, CardWrapper } from "./card.style";
 
 interface Props {
   title?: string;
@@ -18,7 +18,9 @@ export const Card: React.FC<Props> = ({
     <>
       <CardWrapper width={width}>
         {title && <CardHeader title={title} isCentered={titleCentered} />}
-        <CardBody>{children}</CardBody>
+        <CardBody>
+          <CardContent>{children}</CardContent>
+        </CardBody>
       </CardWrapper>
     </>
   );

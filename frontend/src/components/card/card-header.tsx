@@ -1,4 +1,4 @@
-import { Title, TitleWrapper, Wrapper } from "./card-header.style";
+import { Separator, Title, TitleWrapper, Wrapper } from "./card-header.style";
 
 interface Props {
   title: string;
@@ -10,6 +10,7 @@ export const CardHeader: React.FC<Props> = ({ title, isCentered }) => {
     <Wrapper>
       <TitleWrapper isCentered={isCentered}>
         <Title>{title}</Title>
+        <Separator />
       </TitleWrapper>
     </Wrapper>
   );

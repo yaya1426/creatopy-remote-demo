@@ -3,7 +3,7 @@ import { setContext } from "@apollo/client/link/context";
 
 function createIsomorphLink() {
   return new HttpLink({
-    uri: process.env.GRAPHQL_API_ENDPOINT,
+    uri: process.env.REACT_APP_GRAPHQL_API_ENDPOINT,
     credentials: "same-origin",
   });
 }

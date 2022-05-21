@@ -6,6 +6,7 @@ import { LoginPage } from "pages/login";
 import { SignupPage } from "pages/signup";
 import { Navbar } from "components/navbar/navbar";
 import GuardedRoute from "guards/guarded-route";
+import { ResetPasswordPage } from "pages/reset-password";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/reset-password" element={<>About</>} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
       </Routes>
     </Router>
   );
