@@ -1,5 +1,6 @@
 import { Table } from "react-bootstrap";
 import { useAppSelector } from "store/hooks";
+import { GetFormattedDate } from "utils/date-time";
 
 export const ItemsTable: React.FC = () => {
   const items = useAppSelector((state) => state.item.items);
@@ -19,7 +20,7 @@ export const ItemsTable: React.FC = () => {
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>{item.title}</td>
-              <td>{item?.createdAt}</td>
+              <td>{GetFormattedDate(item?.createdAt)}</td>
               <td>{item?.user?.name}</td>
             </tr>
           );
