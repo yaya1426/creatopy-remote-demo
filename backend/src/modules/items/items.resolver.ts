@@ -28,7 +28,10 @@ export class ItemsResolver {
     @CurrentUser() user: UserType,
   ) {
     try {
-      return await this.itemsService.createItem(data, user?.id);
+      const result = await this.itemsService.createItem(data, user?.id);
+      // Add the user
+      result.user = user;
+      return result;
     } catch (err) {
       throw new ApolloError(err.message);
     }
