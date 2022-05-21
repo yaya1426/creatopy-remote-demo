@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useAppDispatch } from "store/hooks";
 import { login } from "store/slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import { ErrorMessage } from "components/error-message/error-message";
 
 type FormValues = {
   username: string;
@@ -110,11 +111,10 @@ export const SignupForm: React.FC = () => {
             })}
             type="password"
           />
-          {errors.confirmPassword && errors.confirmPassword.type == 'required' && (
-            <div className="text-danger pt-1">
-              Required Field
-            </div>
-          )}
+          {errors.confirmPassword &&
+            errors.confirmPassword.type === "required" && (
+              <div className="text-danger pt-1">Required Field</div>
+            )}
           {errors.confirmPassword && (
             <div className="text-danger pt-1">
               {errors.confirmPassword.message}
@@ -127,9 +127,7 @@ export const SignupForm: React.FC = () => {
           </button>
         </div>
       </Form>
-      {errorMessage && (
-        <div className="bg-danger text-white p-1">{errorMessage}</div>
-      )}
+      <ErrorMessage errorMessage={errorMessage} />
       <div className="text-center mt-2">
         <div>
           Already have an account ? <Link to="/login">Click Here To Login</Link>
