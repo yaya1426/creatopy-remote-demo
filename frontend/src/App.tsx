@@ -10,17 +10,15 @@ import GuardedRoute from "guards/guarded-route";
 function App() {
   return (
     <Router>
-      <div>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<GuardedRoute />}>
-            <Route path="/" element={<HomePage />} />
-          </Route>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/reset-password" element={<>About</>} />
-        </Routes>
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<GuardedRoute />}>
+          <Route path="/" element={<HomePage />} />
+        </Route>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/reset-password" element={<>About</>} />
+      </Routes>
     </Router>
   );
 }
