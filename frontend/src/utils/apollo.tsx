@@ -12,13 +12,13 @@ const authLink = setContext((_, { headers }) => {
   let token: string | null = "";
   // get the authentication token from local storage if it exists
   if (typeof window !== "undefined") {
-    token = sessionStorage.getItem("access_token");
+    token = localStorage.getItem("access_token");
   }
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `${token}` : "",
+      authorization: token ? `Bearer ${token}` : "",
     },
   };
 });

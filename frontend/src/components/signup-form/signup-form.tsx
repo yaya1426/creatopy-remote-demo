@@ -37,14 +37,13 @@ export const SignupForm: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
     try {
       setErrorMessage("");
-      const { data, errors } = await signupUser({
+      const { data } = await signupUser({
         variables: { data: formData },
       });
       if (data) {
         dispatch(login({ ...data.signup }));
         navigate("/");
       }
-      console.log(errors);
     } catch (err: any) {
       setErrorMessage(err.message);
     }

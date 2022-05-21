@@ -13,6 +13,9 @@ export const itemSlice = createSlice({
   name: "item",
   initialState,
   reducers: {
+    setItems: (state, action: PayloadAction<Item[]>) => {
+      state.items = action.payload;
+    },
     addItem: (state, action: PayloadAction<Item>) => {
       state.items = [...state.items, action.payload];
     },
@@ -24,6 +27,6 @@ export const itemSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addItem, removeItem } = itemSlice.actions;
+export const { setItems, addItem, removeItem } = itemSlice.actions;
 
 export default itemSlice.reducer;

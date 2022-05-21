@@ -3,6 +3,6 @@ import { User } from "./user";
 export interface Item {
   id: string;
   title: string;
-  createdAt: Date;
+  createdAt: string;
   user: User;
 }

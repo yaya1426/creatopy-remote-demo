@@ -19,7 +19,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         const expiresIn = configService.get('JWT_EXPIRES_IN');
         if (expiresIn) {
           options.signOptions = {
-            expiresIn: +expiresIn,
+            expiresIn: `${expiresIn}h`,
           };
         }
         return options;
