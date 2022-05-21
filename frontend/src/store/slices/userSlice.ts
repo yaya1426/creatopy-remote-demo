@@ -3,7 +3,7 @@ import { User } from "models/user";
 
 export interface UserState {
   isAuthenticated: boolean;
-  user: User;
+  user: User | null;
 }
 
 const initialState: UserState = {
@@ -13,25 +13,28 @@ const initialState: UserState = {
     : null,
 };
 
-export const counterSlice = createSlice({
+export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<User>) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
+    login: (state, action: PayloadAction<{user: User, jwt: string}>) => {
       state.isAuthenticated = true;
-      state.user = action.payload;
+      state.user = action.payload.user;
+      // Presist token to localStorage
+      localStorage.setItem("access_token", action.payload?.jwt);
+      localStorage.setItem("user", JSON.stringify(action.payload?.user));
     },
     logout: (state) => {
       state.isAuthenticated = false;
+      state.user = null;
+      // Clear local storage
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("user");
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout } = counterSlice.actions;
+export const { login, logout } = userSlice.actions;
 
-export default counterSlice.reducer;
+export default userSlice.reducer;
