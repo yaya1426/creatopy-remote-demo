@@ -2,9 +2,11 @@
 
 Remote demo project using React.js, Sequelize (Sqlite3), GraphQL, and Redux-Toolkit written in Typescript
 
-_Watch the video_
+_Watch the Demo Video_
 
-https://github.com/yaya1426/creatopy-remote-demo/blob/03bd429b1a88fb8d069e6b28d5d836dfa8b0a9aa/App%20Tour%20Demo%20Video.mp4
+Youtube Link: https://www.youtube.com/watch?v=2gsoJ030iAo
+
+The video can also be found in this repo.
 
 ## Summary
 
