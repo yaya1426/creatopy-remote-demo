@@ -6,7 +6,7 @@ import { ALL_ITEMS } from "graphql/query/items.query";
 import { useEffect } from "react";
 import { useAppDispatch } from "store/hooks";
 import { setItems } from "store/slices/itemSlice";
-import { Loading } from "notiflix/build/notiflix-loading-aio";
+import { Loading } from "notiflix";
 
 export const HomePage: React.FC = () => {
   const { data, loading } = useQuery(ALL_ITEMS);

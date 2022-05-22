@@ -2,10 +2,12 @@ import { useMutation } from "@apollo/client";
 import { Card } from "components/card/card";
 import { ErrorMessage } from "components/error-message/error-message";
 import { RESET_PASSWORD } from "graphql/mutation/reset-password.mutation";
+import { Notify } from "notiflix";
 import { useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { useAppSelector } from "store/hooks";
 
 type FormValues = {
   newPassword: string;
@@ -13,7 +15,8 @@ type FormValues = {
 };
 
 export const ResetPasswordForm: React.FC = () => {
-  const [signupUser] = useMutation(RESET_PASSWORD);
+  const username = useAppSelector((state) => state.user.resetPasswordUsername);
+  const [resetPassword] = useMutation(RESET_PASSWORD);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
@@ -31,10 +34,11 @@ export const ResetPasswordForm: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
     try {
       setErrorMessage("");
-      const { data, errors } = await signupUser({
-        variables: { data: formData },
+      const { data, errors } = await resetPassword({
+        variables: { data: { ...formData, username } },
       });
       if (data) {
+        Notify.success("Password has been reset successfully. Please login.");
         navigate("/");
       }
       console.log(errors);
@@ -44,6 +48,7 @@ export const ResetPasswordForm: React.FC = () => {
   };
 
   const onError: SubmitErrorHandler<FormValues> = (errors, e) => {};
+
   return (
     <Card width="650px" titleCentered title="Reset your password">
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -85,8 +90,18 @@ export const ResetPasswordForm: React.FC = () => {
             </div>
           )}
         </Form.Group>
+        <div className="d-grid">
+          <button type="submit" className="my-3 btn btn-primary btn-block">
+            Confirm
+          </button>
+        </div>
       </Form>
       <ErrorMessage errorMessage={errorMessage} />
+      <div className="text-center mt-2">
+        <div>
+          <Link to="/login">Back to Login</Link>
+        </div>
+      </div>
     </Card>
   );
 };

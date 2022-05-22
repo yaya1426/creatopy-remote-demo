@@ -25,7 +25,19 @@ export class SignupInput {
 }
 
 @InputType()
+export class VerifyUserInput {
+  @Field()
+  username: string;
+
+  @Field()
+  recoveryCode: string;
+}
+
+@InputType()
 export class ResetPasswordInput {
+  @Field()
+  username: string;
+
   @Field()
   newPassword: string;
 

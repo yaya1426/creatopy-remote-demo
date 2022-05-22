@@ -32,8 +32,10 @@ type Query {
 }
 
 type Mutation {
+  findUser(username: String!): User!
   login(data: LoginInput!): LoginSignupResult!
   signup(data: SignupInput!): LoginSignupResult!
+  verifyUser(data: VerifyUserInput!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!
   createItem(data: CreateItemInput!): Item!
 }
@@ -50,7 +52,13 @@ input SignupInput {
   confirmPassword: String!
 }
 
+input VerifyUserInput {
+  username: String!
+  recoveryCode: String!
+}
+
 input ResetPasswordInput {
+  username: String!
   newPassword: String!
   confirmNewPassword: String!
 }

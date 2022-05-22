@@ -44,7 +44,7 @@ export const SignupForm: React.FC = () => {
       });
       if (data) {
         dispatch(login({ ...data.signup }));
-        Notify.success("Account created successfully. Welcome!")
+        Notify.success("Account created successfully. Welcome!");
         navigate("/");
       }
     } catch (err: any) {
@@ -52,7 +52,11 @@ export const SignupForm: React.FC = () => {
     }
   };
 
-  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {};
+  const onError: SubmitErrorHandler<FormValues> = (errors, e) => {
+    Notify.failure(
+      "Make sure to enter all required fields (Allowed input is only Alphanumeric A-Z, a-z, 0-9)"
+    );
+  };
 
   return (
     <Card width="650px" titleCentered title="Create Your Account">

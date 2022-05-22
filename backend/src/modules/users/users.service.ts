@@ -8,8 +8,10 @@ import {
   LoginInput,
   ResetPasswordInput,
   SignupInput,
+  VerifyUserInput,
 } from '../../graphql/users/users.inputs';
 import * as bcrypt from 'bcrypt';
+import { ConfigService } from 'config/config.service';
 
 @Injectable()
 export class UsersService {
@@ -17,6 +19,7 @@ export class UsersService {
     @Inject(forwardRef(() => AuthService)) private authService: AuthService,
     @InjectModel(UserModel)
     private readonly userModel: typeof UserModel,
+    private readonly configService: ConfigService,
   ) {}
 
   async findOneByUsername(username: string): Promise<User> {
@@ -77,14 +80,39 @@ export class UsersService {
     }
   }
 
+  async verifyUser(data: VerifyUserInput) {
+    try {
+      // Validate that user exists
+      const findUser = await this.findOneByUsername(data.username);
+      if (findUser) {
+        // Check the recovery code
+        // STATIC CODE IS FOR DEMO PURPOSES ONLY
+        // Note: In a real life scenario this should be an OTP service using mobile number or email address to validate account
+        if (data.recoveryCode === this.configService.get('RECOVERY_CODE')) {
+          return true;
+        }
+      }
+      return false;
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  }
+
   async resetPassword(
     resetPasswordInput: ResetPasswordInput,
-    user: UserType,
   ): Promise<boolean> {
     try {
-      const findUser = await this.findOneByUsername(user.username);
+      const findUser = await this.findOneByUsername(
+        resetPasswordInput.username,
+      );
       if (!findUser) {
         throw new Error('User does not exist');
+      }
+      // Validate passwords are matching
+      if (
+        resetPasswordInput.newPassword !== resetPasswordInput.confirmNewPassword
+      ) {
+        throw new Error('Passwords do not match');
       }
       // Generate new password hash
       const passwordHash = await this.generatePasswordHash(

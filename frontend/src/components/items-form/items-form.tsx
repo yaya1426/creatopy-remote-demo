@@ -1,14 +1,13 @@
 import { useMutation } from "@apollo/client";
 import { CREATE_ITEM } from "graphql/mutation/add-item.mutation";
 import { Notify } from "notiflix";
-import { useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useAppDispatch } from "store/hooks";
 import { addItem } from "store/slices/itemSlice";
 
 interface FormValues {
-  title: string;
+  title: string | null;
 }
 export const ItemsForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +16,8 @@ export const ItemsForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    setFocus,
   } = useForm<FormValues>({ mode: "onChange" });
 
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
@@ -29,6 +30,8 @@ export const ItemsForm: React.FC = () => {
       // Dispatch to state
       dispatch(addItem(data.createItem));
       Notify.success("New item added successfully !");
+      setValue("title", null);
+      setFocus("title");
     } catch (err: any) {
       Notify.failure(err.message);
     }

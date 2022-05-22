@@ -7,6 +7,7 @@ import {
   LoginInput,
   ResetPasswordInput,
   SignupInput,
+  VerifyUserInput,
 } from 'graphql/users/users.inputs';
 import { CurrentUser } from './users.decorator';
 import { UsersService } from './users.service';
@@ -14,6 +15,19 @@ import { UsersService } from './users.service';
 @Resolver()
 export class UsersResolver {
   constructor(private usersService: UsersService) {}
+
+  @Mutation((returns) => UserType)
+  async findUser(@Args('username') username: string) {
+    try {
+      const findUser = await this.usersService.findOneByUsername(username);
+      if (findUser) {
+        return findUser;
+      }
+      throw new ApolloError('Username does not exist');
+    } catch (err) {
+      throw new ApolloError(err.message);
+    }
+  }
 
   @Mutation((returns) => LoginSignupResult)
   async login(@Args('data') data: LoginInput) {
@@ -38,16 +52,18 @@ export class UsersResolver {
   }
 
   @Mutation((returns) => Boolean)
-  @UseGuards(JwtAuthGuard)
-  async resetPassword(
-    @Args('data') resetPasswordInput: ResetPasswordInput,
-    @CurrentUser() user: UserType,
-  ) {
+  async verifyUser(@Args('data') data: VerifyUserInput) {
     try {
-      const result = await this.usersService.resetPassword(
-        resetPasswordInput,
-        user,
-      );
+      return await this.usersService.verifyUser(data);
+    } catch (err) {
+      throw new ApolloError(err.message);
+    }
+  }
+
+  @Mutation((returns) => Boolean)
+  async resetPassword(@Args('data') resetPasswordInput: ResetPasswordInput) {
+    try {
+      const result = await this.usersService.resetPassword(resetPasswordInput);
       return result;
     } catch (err) {
       throw new ApolloError(err.message);
