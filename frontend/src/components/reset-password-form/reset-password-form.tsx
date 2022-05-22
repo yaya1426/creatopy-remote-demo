@@ -55,7 +55,7 @@ export const ResetPasswordForm: React.FC = () => {
 
   return (
     <Card width="650px" titleCentered title="Reset your password">
-      <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <Form autoComplete="off" onSubmit={handleSubmit(onSubmit, onError)}>
         <Form.Group className="mb-3">
           <Form.Label>
             New Password <span className="text-danger">*</span>
@@ -66,6 +66,7 @@ export const ResetPasswordForm: React.FC = () => {
               required: true,
             })}
             type="password"
+            autoComplete="off"
           />
           {errors.newPassword && (
             <div className="text-danger pt-1">Required Field</div>
@@ -83,6 +84,7 @@ export const ResetPasswordForm: React.FC = () => {
                 value === newPassword.current || "The passwords do not match",
             })}
             type="password"
+            autoComplete="off"
           />
           {errors.confirmNewPassword &&
             errors.confirmNewPassword.type === "required" && (

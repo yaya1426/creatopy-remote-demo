@@ -55,7 +55,7 @@ export const LoginForm: React.FC = () => {
 
   return (
     <Card width="650px" titleCentered title="Welcome To Creatopy Item App">
-      <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <Form autoComplete="off" onSubmit={handleSubmit(onSubmit, onError)}>
         <Form.Group className="mb-3">
           <Form.Label>
             Username <span className="text-danger">*</span>
@@ -69,6 +69,7 @@ export const LoginForm: React.FC = () => {
                 message: regexErrorMessage,
               },
             })}
+            autoComplete="new-username"
           />
           {errors.username && errors.username.type === "required" && (
             <div className="text-danger pt-1">Required Field</div>
@@ -87,6 +88,7 @@ export const LoginForm: React.FC = () => {
               required: true,
             })}
             type="password"
+            autoComplete="new-password"
           />
           {errors.password && (
             <div className="text-danger pt-1">Required Field</div>
