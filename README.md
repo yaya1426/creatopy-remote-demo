@@ -15,6 +15,8 @@ The layout of the app was built using _Bootstrap v5_, and custom _Styled-Compone
 
 A sqlite database is attached in the repo, so no need to configure any database connections.
 
+---
+
 #### Frontend
 
 Built using create-react-app boilerplate with (redux-typescript) template by running this command:
@@ -23,9 +25,19 @@ Built using create-react-app boilerplate with (redux-typescript) template by run
 
 #### Backend
 
-Built using Nest.js boilerplate by running:
+- The backend node.js server is built using Nest.js boilerplate by running:
 
 `nest new backend`
+
+- Graphql Apollo Server was setup and configured to be available at:
+
+`http://localhost:3001/graphql`
+
+- The database is auto-synced and generated using Sequelize with Sqlite3. The database file can be found under:
+
+`backend/db/data.db`
+
+Feel free to delete the database in case wanted to test from scratch.
 
 ---
 
