@@ -6,7 +6,7 @@ _Watch the Demo Video_
 
 Youtube Link: https://www.youtube.com/watch?v=2gsoJ030iAo
 
-The video can also be found in this repo.
+The video can also be found in this repo. [Click Here](App%20Tour%20Demo%20Video.mp4)
 
 ## Summary
 
