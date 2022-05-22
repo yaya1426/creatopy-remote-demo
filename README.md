@@ -19,9 +19,13 @@ A sqlite database is attached in the repo, so no need to configure any database 
 
 #### Frontend
 
-Built using create-react-app boilerplate with (redux-typescript) template by running this command:
+- Built using create-react-app boilerplate with (redux-typescript) template by running this command:
 
 `npx create-react-app frontend --template redux-typescript`
+
+- The frontend is running at default port of CRA.
+
+`http://localhost:3000`
 
 #### Backend
 
